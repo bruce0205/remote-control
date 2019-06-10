@@ -15,14 +15,16 @@ function createWindow() {
     // width: 800,
     // height: 600,
     fullscreen: true,
+    webSecurity: false,
     webPreferences: {
       nodeIntegration: true
     }
   })
 
   // and load the index.html of the app.
+  app.commandLine.appendSwitch('autoplay-policy', 'no-user-gesture-required')
   // mainWindow.loadFile('index.html')
-  mainWindow.loadURL(`https://www.youtube.com/tv#/watch?v=TCaM1Tl01lQ`)
+  mainWindow.loadURL(`https://www.youtube.com/tv#/watch?v=4ZVUmEUFwaY`)
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
