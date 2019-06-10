@@ -1,4 +1,5 @@
 // Modules to control application life and create native browser window
+const mqtt = require('mqtt')
 const { app, BrowserWindow } = require('electron')
 process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true';
 // Keep a global reference of the window object, if you don't, the window will
@@ -8,6 +9,50 @@ let mainWindow
 let mapping = {
   ebc: 'dxpWqjvEKaM'
 }
+
+const host = 'mqtt://mqtt.meproz.com'
+let options = {
+  clientId: 'mqttjs_' + Math.random().toString(16).substr(2, 8),
+  clean: true, // set to false to receive QoS 1 and 2 messages while offline
+  keepalive: 60,
+  username: 'fontrip',
+  password: '42760988',
+  reconnectPeriod: 1000,
+  connectTimeout: 30 * 1000
+}
+
+const client = mqtt.connect(host, options)
+client.on('connect', function () {
+})
+client.subscribe('change', (err) => {
+  if (!err) {
+  }
+})
+
+client.on('message', function (topic, message) {
+  console.log(`${topic}: ${message}`)
+  console.log(`==${message}==`)
+  if (topic === 'change') {
+    console.log('tttt')
+    console.log(message === 'ebc')
+    switch (message.toString()) {
+      case 'set':
+        console.log('set')
+        mainWindow.loadURL(`https://www.youtube.com/tv#/watch?v=4ZVUmEUFwaY`)
+        break;
+      case 'tvbs':
+        console.log('tbvs')
+        mainWindow.loadURL(`https://www.youtube.com/tv#/watch?v=Hu1FkdAOws0`)
+        break;
+      case 'ebc':
+        console.log('ebc')
+        mainWindow.loadURL(`https://www.youtube.com/tv#/watch?v=dxpWqjvEKaM`)
+        break;
+      default:
+        console.log('ddd')
+    }
+  }
+})
 
 function createWindow() {
   // Create the browser window.
