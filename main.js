@@ -61,6 +61,8 @@ function createWindow() {
     // height: 600,
     fullscreen: true,
     webSecurity: false,
+    kiosk: true,
+    frame: false,
     webPreferences: {
       nodeIntegration: true
     }
